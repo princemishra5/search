@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: semics
+spec: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: search
+  name: search
+  namespace: semics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: search
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: search
+    spec:
+      containers:
+      - image: acrsharedcommon64963.azurecr.io/search
+        name: search
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: search
+  name: search
+  namespace: semics
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: search
+  type: ClusterIP
+status:
+  loadBalancer: {}
