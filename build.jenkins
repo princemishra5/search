@@ -63,9 +63,8 @@ podTemplate(
         
         stage ('Staging') {
             container('kubectl'){
-
-      withKubeConfig([credentialsId: 'app_k8s_secret', serverUrl: '${APP_K8s_URL}']) {
-                  sh """
+                
+                sh """
                             cat <<EOF > kustomization.yaml
                             commonLabels:
                               app: $PROJECT
@@ -76,6 +75,12 @@ podTemplate(
                              - deployment.yaml
                             EOF
                             kubectl kustomize . > deployment_generated.yaml
+                            kubectl apply -f deployment_generated.yaml
+
+                     """
+
+      withKubeConfig([credentialsId: 'app_k8s_secret', serverUrl: '${APP_K8s_URL}']) {
+                  sh """
                             kubectl apply -f deployment_generated.yaml
 
                      """
