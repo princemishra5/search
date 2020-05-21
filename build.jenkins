@@ -75,7 +75,7 @@ podTemplate(
                              - deployment.yaml
                             EOF
                             kubectl kustomize . > deployment_generated.yaml
-                            kubectl apply -f deployment_generated.yaml
+                            cat deployment_generated.yaml
 
                      """
 
